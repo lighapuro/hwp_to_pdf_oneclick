@@ -1,19 +1,32 @@
 # -*- mode: python ; coding: utf-8 -*-
+import os
+import sys
+import tkinterdnd2
 
+_tkdnd_src = os.path.join(os.path.dirname(tkinterdnd2.__file__), "tkdnd", "win-x64")
 
 a = Analysis(
-    ['hwpdf_gui.py'],
+    ["hwp_to_pdf_oneclick.py"],
     pathex=[],
     binaries=[],
-    datas=[],
-    hiddenimports=[],
+    datas=[
+        (_tkdnd_src, "tkinterdnd2/tkdnd/win-x64"),
+    ],
+    hiddenimports=[
+        "tkinterdnd2",
+        "win32com",
+        "win32com.client",
+        "win32com.server",
+        "pythoncom",
+        "pywintypes",
+    ],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
     excludes=[],
     noarchive=False,
-    optimize=0,
 )
+
 pyz = PYZ(a.pure)
 
 exe = EXE(
@@ -22,7 +35,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='HWP_PDF변환기',
+    name="HWP_PDF변환기",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
